@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "./build/server",
+  "prisma": {
+    "seed": "node prisma/seeds/create_default_users_seed.js"
+  },
   "scripts": {
+    "seed": "node prisma/seeds/create_default_users_seed.js",
     "start": "npx -y tsc && node .",
     "dev": "nodemon --watch \"./src/**\" ./src/server.ts"
   },
