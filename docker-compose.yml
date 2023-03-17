@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  node_server:
+    build: ./backend
+    container_name: node_server
+    tty: true
+    stdin_open: true
+    restart: always
+    environment:
+      - SERVER_PORT=3000
+      - JWT_SECRET=jwt_secret
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_HOST=mysql
+      - DB_PORT=3306
+    depends_on:
+      - db
+    ports:
+      - 3001:3001
+    networks:
+      - starti_network
+
+  mysql:
+    container_name: mysql_db
+    image: mysql:8.0.23
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - starti_network
+
+networks:
+  starti_network:
+    driver: bridge
