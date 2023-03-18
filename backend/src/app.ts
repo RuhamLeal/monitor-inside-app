@@ -1,6 +1,7 @@
 import express from 'express';
 import userRouter from './routes/user.routes';
 import cors from 'cors';
+import HttpErrorMiddleware from './middlewares/HttpError';
 
 class App {
   public app: express.Express;
@@ -17,7 +18,8 @@ class App {
   private router(): void {
     this.app.use(
       '/api/v1',
-      userRouter
+      userRouter,
+      HttpErrorMiddleware,
     );
   }
 
