@@ -15,6 +15,18 @@ class UserController {
     this.userService = new UserService();
   }
 
+  public async getAllUsers() {
+    try {
+      const admin = this.req.user;
+
+      const users = await this.userService.findAllUsers(admin);
+
+      return this.res.status(200).json(users);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
   public async postNewUser() {
     try {
       const admin = this.req.user;

@@ -16,6 +16,20 @@ export default class UserService {
 
   constructor(private mysql_db = prisma) {}
 
+  public async findAllUsers(admin: Admin) {
+    if (!admin.admin) {
+      throw new UnauthorizedException('Usuario não autorizado');
+    }
+
+    const users = await this.mysql_db.user.findMany();
+
+    console.log(users);
+
+    if (users.length === 0) return [];
+
+    return users.map((user) => this.createNewUserDomain(user));
+  }
+
   public async registerNewUser(newUser: IUser, admin: Admin) {
     UserValidation.validateSignin(newUser);
 
