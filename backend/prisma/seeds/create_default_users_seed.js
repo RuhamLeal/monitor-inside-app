@@ -25,7 +25,7 @@ const load = async () => {
         }
       ]
     })
-    console.log('Added category data')
+    console.log('Added user data')
 
   } catch (e) {
     console.error(e)

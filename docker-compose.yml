@@ -7,7 +7,16 @@ services:
     tty: true
     stdin_open: true
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.70' 
+          memory: 2048M
+        reservations:
+          cpus: '0.35' 
+          memory: 1024M
     environment:
+      - MONGO_DB_URL=mongodb://root:root@mongo:27017/starti
       - SERVER_PORT=3000
       - JWT_SECRET=jwt_secret
       - DB_USER=root
@@ -27,8 +36,36 @@ services:
     restart: always
     ports:
       - 3306:3306
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'         
+          memory: 1024M
+        reservations:
+          cpus: '0.25'          
+          memory: 512M
     environment:
       MYSQL_ROOT_PASSWORD: password
+    networks:
+      - starti_network
+
+  mongo:
+    container_name: mongo_db
+    image: mongo:4.4
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'  
+          memory: 1024M
+        reservations:
+          cpus: '0.25'  
+          memory: 512M
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
     networks:
       - starti_network
 
