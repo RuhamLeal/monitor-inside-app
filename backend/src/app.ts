@@ -16,7 +16,7 @@ class App {
 
   private router(): void {
     this.app.use(
-      'api/v1',
+      '/api/v1',
       userRouter
     );
   }

@@ -10,7 +10,7 @@ export default class UserValidation {
         throw new UnprocessableException('Campo "admin" não exite ou inserido incorretamente');
       };
 
-      if (typeof signin[field] !== 'string') {
+      if (field !== 'admin' && typeof signin[field] !== 'string') {
         throw new UnprocessableException(`Campo ${field} não exite ou inserido incorretamente`);
       }
     })
