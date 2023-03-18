@@ -8,19 +8,19 @@ const load = async () => {
         {
           email: 'admin@admin.com',
           name: 'AdminUser',
-          password: 'AdminPass',
+          password: '$2a$10$larPpJnlYc.PrTfAIYcHy.DvwGnkVH4MnlJE1GRex84t0GBgSETiy',
           admin: true,
         },
         {
           email: 'user001@user.com',
           name: 'user001',
-          password: 'user',
+          password: '$2a$10$7P5Ph.olO0JS9R9dWYnl1eTFwzVaB1beDdlAbAZWloZgAWDt2rvuq',
           admin: false,
         },
         {
           email: 'user002@user.com',
           name: 'user002',
-          password: 'user',
+          password: '$2a$10$7P5Ph.olO0JS9R9dWYnl1eTFwzVaB1beDdlAbAZWloZgAWDt2rvuq',
           admin: false,
         }
       ]
