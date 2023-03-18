@@ -15,4 +15,14 @@ export default class UserValidation {
       }
     })
   }
+
+  public static validateLogin(login: any): void {
+    const fields = ['email', 'password'];
+
+    fields.forEach((field) => {
+      if (typeof login[field] !== 'string') {
+        throw new UnprocessableException(`Campo ${field} não exite ou inserido incorretamente`);
+      }
+    })
+  }
 }

@@ -1,7 +1,10 @@
 import prisma from "../models/prismaClientConnection";
 import User from "../Domains/User";
-import IUser from "../Interfaces/IUser";
+import IUser, { Admin, Login } from "../Interfaces/IUser";
 import UserValidation from "./validations/UserValidation";
+import JWT from "../auth/TokenGenerator";
+import NotFoundException from "../Exceptions/NotFound";
+import UnauthorizedException from "../Exceptions/Unauthorized";
 
 export default class UserService {
   private createNewUserDomain(newUser: IUser | null): User | null {
@@ -12,11 +15,35 @@ export default class UserService {
 
   constructor(private mysql_db = prisma) {}
 
-  public async registerNewUser(newUser: IUser) {
+  public async registerNewUser(newUser: IUser, admin: Admin) {
     UserValidation.validateSignin(newUser);
+
+    if (!admin.admin) {
+      throw new UnauthorizedException('Usuario não autorizado');
+    }
 
     const user = await this.mysql_db.user.create({ data: newUser });
 
     return this.createNewUserDomain(user);
+  }
+
+  public async login(loginData: Login) {
+    UserValidation.validateLogin(loginData);
+
+    const {email, password} = loginData;
+
+    const user = await this.mysql_db.user.findFirst({ where: { email, password } });
+
+    if (!user) {
+      throw new NotFoundException('Email ou senha incorretos');
+    }
+
+    const data = {
+      id: user.id,
+      email: user.email,
+      admin: user.admin
+    }
+
+    return { token: JWT.generateToken(data)};
   }
 }

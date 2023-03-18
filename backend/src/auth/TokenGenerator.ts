@@ -4,7 +4,7 @@ import 'dotenv/config';
 const jwtSecret:jwt.Secret = process.env.JWT_SECRET as string;
 
 export default class JWT {
-  public static generateToken(data: object = {}): string {
+  public static generateToken(data = {}): string {
     const token = jwt.sign(
       data,
       jwtSecret,
