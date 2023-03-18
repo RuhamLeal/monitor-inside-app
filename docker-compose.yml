@@ -44,6 +44,8 @@ services:
         reservations:
           cpus: '0.25'          
           memory: 512M
+    volumes:
+      - mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
     networks:
@@ -61,6 +63,8 @@ services:
         reservations:
           cpus: '0.25'  
           memory: 512M
+    volumes:
+      - mongo:/data/db
     ports:
       - 27017:27017
     environment:
@@ -68,6 +72,10 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=root
     networks:
       - starti_network
+
+volumes:
+  mysql:
+  mongo:
 
 networks:
   starti_network:
