@@ -4,23 +4,25 @@ import emitLog from "./utils/emitLog";
 import { Server } from 'socket.io';
 
 export default async function serverMonitoring(socket: Server) {
-  process.setMaxListeners(0);
-
   const logger = createLoggerSeq();
 
   process
     .on("uncaughtException", (error) => emitLog(logger, error, 'uncaughtException'))
     .on("unhandledRejection", (error: Error, promise: Promise<any>) => emitLog(logger, error, 'unhandledRejection', promise));
 
-  createChild();
+  createChild(socket);
 
-  async function createChild() {
+  async function createChild(socket: Server) {
     const child = fork(__dirname + "/serverStatsProcess.js");
     const logger = createLoggerSeq();
 
     child.on("exit", (code, signal) => {
       emitLog(logger, code, 'Restartando monitoramento', signal);
-      createChild();
+      createChild(socket);
+    });
+
+    child.on("message", (data) => {
+      socket.sockets.emit('server-stats', data);
     });
 
     child.on("error", (err) => {

@@ -3,22 +3,21 @@ import userRouter from './routes/user.routes';
 import cors from 'cors';
 import HttpErrorMiddleware from './middlewares/HttpError';
 import http from 'http';
-import { Server } from 'socket.io';
+import socket from 'socket.io';
 import serverMonitoring from './services/serverMonitoring';
 
 class App {
   public app: express.Express;
-  public server: any;
-  public io: any;
+  public server: http.Server;
+  public io: socket.Server;
 
   constructor() {
     this.app = express();
 
     this.server = http.createServer(this.app);
 
-    this.io = new Server(this.server);
+    this.io = new socket.Server(this.server, {cors: {origin: "*"}});
 
-    
     this.config();
     this.router();
     
@@ -47,8 +46,9 @@ class App {
   }
 
   public async start(PORT: string | number): Promise<void> {
-    serverMonitoring(this.io);
     this.server.listen(PORT, () => console.log(`Running on port ${PORT}`));
+
+    await serverMonitoring(this.io);
   }
 }
 
