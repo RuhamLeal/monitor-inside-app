@@ -16,4 +16,5 @@ model User {
   name     String
   password String
   admin    Boolean
+  excluded Boolean @default(false)
 }

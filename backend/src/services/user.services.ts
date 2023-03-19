@@ -21,7 +21,7 @@ export default class UserService {
       throw new UnauthorizedException('Usuario não autorizado');
     }
 
-    const users = await this.mysql_db.user.findMany();
+    const users = await this.mysql_db.user.findMany({ where: { excluded: false } });
 
     if (users.length === 0) return [];
 

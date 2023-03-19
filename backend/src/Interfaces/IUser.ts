@@ -4,6 +4,7 @@ interface IUser {
   name: string;
   password: string;
   admin: boolean;
+  excluded?: boolean;
 }
 
 export interface Login {
