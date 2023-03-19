@@ -40,6 +40,19 @@ class UserController {
     }
   }
 
+  public async deleteUserById() {
+    try {
+      const admin = this.req.user;
+      const { id } = this.req.params;
+  
+      const deletedUser = await this.userService.deactivateUser(Number(id), admin);
+
+      return this.res.status(200).json(deletedUser);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
   public async postNewUser() {
     try {
       const admin = this.req.user;

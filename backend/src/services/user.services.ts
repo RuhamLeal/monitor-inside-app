@@ -6,6 +6,7 @@ import UserValidation from "./validations/UserValidation";
 import JWT from "../auth/TokenGenerator";
 import NotFoundException from "../Exceptions/NotFound";
 import UnauthorizedException from "../Exceptions/Unauthorized";
+import UnprocessableException from "../Exceptions/Unprocessable";
 
 export default class UserService {
   private createNewUserDomain(newUser: IUser | null): User | null {
@@ -53,6 +54,28 @@ export default class UserService {
       .update({ where: { id: userData.id }, data: dataToUpdate});
 
     return this.createNewUserDomain(userData);
+  }
+
+  public async deactivateUser(userId: number, admin: Admin) {
+    if (!admin.admin) {
+      throw new UnauthorizedException('Usuario não autorizado');
+    }
+
+    if (!Number.isInteger(userId)) {
+      throw new UnprocessableException('Parametro Id do usuario não exite ou inserido incorretamente');
+    }
+
+    const userExist = await this.mysql_db.user
+      .findFirst({ where: { id: userId } });
+
+    if (!userExist) {
+      throw new NotFoundException('Usuario inexistente');
+    }
+
+    const deletedUser = await this.mysql_db.user
+      .update({ where: { id: userId }, data: { excluded: true }});
+
+    return this.createNewUserDomain(deletedUser);
   }
 
   public async registerNewUser(newUser: IUser, admin: Admin) {

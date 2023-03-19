@@ -15,6 +15,11 @@ userRouter
     jwtAuthentication,
     (req, res, next) => new UserController(req, res, next).updateUserById(),
   )
+  .delete(
+    '/user/:id',
+    jwtAuthentication,
+    (req, res, next) => new UserController(req, res, next).deleteUserById(),
+  )
   .post(
     '/user/login',
     (req, res, next) => new UserController(req, res, next).login(),
