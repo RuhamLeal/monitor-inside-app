@@ -25,4 +25,22 @@ export default class UserValidation {
       }
     })
   }
+
+  public static validateUpdateData(data: any): void {
+    const fields = ['email', 'password', 'name', 'admin'];
+
+    if (!Number.isInteger(data.id)) {
+      throw new UnprocessableException('Campo "id" não exite ou inserido incorretamente');
+    }
+
+    fields.forEach((field) => {
+      if (field === 'admin' && typeof data[field] !== 'boolean') {
+        throw new UnprocessableException('Campo "admin" não exite ou inserido incorretamente');
+      };
+
+      if (field !== 'admin' && typeof data[field] !== 'string') {
+        throw new UnprocessableException(`Campo ${field} não exite ou inserido incorretamente`);
+      }
+    })
+  }
 }

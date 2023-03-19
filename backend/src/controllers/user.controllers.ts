@@ -27,6 +27,19 @@ class UserController {
     }
   }
 
+  public async updateUserById() {
+    try {
+      const admin = this.req.user;
+      const updateData: IUser = this.req.body;
+  
+      const updatedUser = await this.userService.updateUserById(updateData, admin);
+
+      return this.res.status(200).json(updatedUser);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
   public async postNewUser() {
     try {
       const admin = this.req.user;

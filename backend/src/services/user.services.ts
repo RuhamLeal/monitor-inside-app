@@ -23,11 +23,36 @@ export default class UserService {
 
     const users = await this.mysql_db.user.findMany();
 
-    console.log(users);
-
     if (users.length === 0) return [];
 
     return users.map((user) => this.createNewUserDomain(user));
+  }
+
+  public async updateUserById(userData: IUser, admin: Admin) {
+    if (!admin.admin) {
+      throw new UnauthorizedException('Usuario não autorizado');
+    }
+
+    UserValidation.validateUpdateData(userData);
+
+    const userExist = await this.mysql_db.user
+      .findFirst({ where: { id: userData.id } });
+
+    if (!userExist) {
+      throw new NotFoundException('Usuario inexistente');
+    }
+
+    const dataToUpdate = {
+      email: userData.email,
+      name: userData.name,
+      password: bcrypt.hashSync(userData.password, 10),
+      admin: userData.admin,
+    }
+
+    await this.mysql_db.user
+      .update({ where: { id: userData.id }, data: dataToUpdate});
+
+    return this.createNewUserDomain(userData);
   }
 
   public async registerNewUser(newUser: IUser, admin: Admin) {

@@ -10,6 +10,11 @@ userRouter
     jwtAuthentication,
     (req, res, next) => new UserController(req, res, next).getAllUsers(),
   )
+  .put(
+    '/user',
+    jwtAuthentication,
+    (req, res, next) => new UserController(req, res, next).updateUserById(),
+  )
   .post(
     '/user/login',
     (req, res, next) => new UserController(req, res, next).login(),
