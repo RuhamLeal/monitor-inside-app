@@ -16,7 +16,8 @@ services:
           cpus: '0.35' 
           memory: 1024M
     environment:
-      - MONGO_DB_URL=mongodb://root:root@mongo:27017/starti
+      - MONGO_DB_URL=mongodb://root:root@mongo:27017/admin
+      - SEQ_URL=http://seq:5341
       - SERVER_PORT=3001
       - JWT_SECRET=jwt_secret
       - DB_USER=root

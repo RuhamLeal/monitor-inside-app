@@ -1,11 +1,10 @@
-FROM node:16.14-alpine
+FROM node:16.17.1
 
 WORKDIR /app/backend
 
 EXPOSE 3001
 
 COPY ./package.json ./
-COPY ./package-lock.json ./
 
 RUN npm install
 
@@ -13,5 +12,7 @@ COPY . .
 
 RUN npx prisma generate
 
-CMD [ "npm", "run", "start" ]
+RUN npm run build
+
+CMD ["sh", "-c", "npm start"]
 
