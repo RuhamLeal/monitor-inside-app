@@ -4,6 +4,7 @@ import cors from 'cors';
 import HttpErrorMiddleware from './middlewares/HttpError';
 import http from 'http';
 import { Server } from 'socket.io';
+import serverMonitoring from './services/serverMonitoring';
 
 class App {
   public app: express.Express;
@@ -17,9 +18,10 @@ class App {
 
     this.io = new Server(this.server);
 
+    
     this.config();
     this.router();
-
+    
     this.app.get('/', (req, res) => res.json({ api: true, on: true }));
   }
 
@@ -44,7 +46,8 @@ class App {
     this.app.use(accessControl);
   }
 
-  public start(PORT: string | number):void {
+  public async start(PORT: string | number): Promise<void> {
+    serverMonitoring(this.io);
     this.server.listen(PORT, () => console.log(`Running on port ${PORT}`));
   }
 }
