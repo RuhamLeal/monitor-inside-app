@@ -2,12 +2,20 @@ import express from 'express';
 import userRouter from './routes/user.routes';
 import cors from 'cors';
 import HttpErrorMiddleware from './middlewares/HttpError';
+import http from 'http';
+import { Server } from 'socket.io';
 
 class App {
   public app: express.Express;
+  public server: any;
+  public io: any;
 
   constructor() {
     this.app = express();
+
+    this.server = http.createServer(this.app);
+
+    this.io = new Server(this.server);
 
     this.config();
     this.router();
@@ -37,7 +45,7 @@ class App {
   }
 
   public start(PORT: string | number):void {
-    this.app.listen(PORT, () => console.log(`Running on port ${PORT}`));
+    this.server.listen(PORT, () => console.log(`Running on port ${PORT}`));
   }
 }
 
