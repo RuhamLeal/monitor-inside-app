@@ -20,6 +20,7 @@
             id="login-input-password"
           />
         </label>
+        <h1 v-show="err">{{ errMsg }}</h1>
       </section>
       <div class="fields">
         <button class="button" type="submit">Salvar</button>
@@ -29,12 +30,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/store';
 import { LOGIN } from '@/store/actions-types';
 import useNotificador from '@/hooks/notificador';
 import { TipoNotificacao } from '@/interfaces/INotificaçao';
+import loginValidation from '@/services/validations/loginValidation';
 
 export default defineComponent({
   name: 'login-form',
@@ -47,10 +49,25 @@ export default defineComponent({
     const inputEmail = ref('');
     const inputPassword = ref('');
 
+    const inputErr = ref({
+      err: false,
+      msg: '',
+    });
+
     const login = async () => {
+      const loginFields = { email: inputEmail.value, password: inputPassword.value };
+
+      const { err } = await loginValidation(loginFields);
+
+      if (err) {
+        inputErr.value.msg = err;
+        inputErr.value.err = true;
+        return null;
+      }
+
       const res = await store.dispatch(
         LOGIN,
-        { email: inputEmail.value, password: inputPassword.value },
+        loginFields,
       );
 
       if (res.message) {
@@ -67,6 +84,8 @@ export default defineComponent({
       inputPassword,
       login,
       notificar,
+      err: computed(() => inputErr.value.err),
+      errMsg: computed(() => inputErr.value.msg),
     };
   },
 });
