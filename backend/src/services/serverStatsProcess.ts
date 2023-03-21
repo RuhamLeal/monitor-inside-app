@@ -71,9 +71,10 @@ export function serverStatsProcess(logger: any) {
   
       if (stats.length === 0) {
         await server_stats_model.create(serverStats);
+      } else {
+        await server_stats_model.findByIdAndUpdate(stats[0]['_id'], serverStats);
       }
   
-      await server_stats_model.findByIdAndUpdate(stats[0]['_id'], serverStats);
     } catch(err) {
       emitLog(logger, err, 'Erro no algoritmo principal do process');
     }
