@@ -14,9 +14,11 @@ const loginModule: Module<null, State> = {
 
         return res.data;
       } catch (err: any) {
-        if (err.response.data.message) return { message: err.response.data.message };
+        if (!err.response) {
+          return { err, message: 'Unable to fetch' };
+        }
 
-        return { err, message: 'Unable to fetch' };
+        return { message: err.response?.data.message };
       }
     },
   },
