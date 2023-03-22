@@ -44,7 +44,33 @@ export default defineComponent({
   position: absolute;
   right: 0;
   width: 300px;
-  padding: 8px;
+  padding: 25px;
   z-index: 105;
+}
+.notificacoes article{
+  gap: 10px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 30px;
+}
+
+.notificacoes article .title{
+  position: relative;
+  right: 70px;
+  bottom: 20px;
+}
+
+.notificacoes .danger {
+  background-color: rgb(187, 37, 37);
+}
+.notificacoes .warning {
+  background-color: rgb(146, 26, 26);
+}
+.notificacoes .success {
+  background-color: rgb(134, 211, 138);
 }
 </style>

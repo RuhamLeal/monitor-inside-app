@@ -16,7 +16,7 @@ export interface IServerStats {
     total: number;
     used: number;
   },
-  network: network[];
+  networks: network[];
   system: {
     name: string;
     uptime: number;

@@ -26,7 +26,7 @@ const dashboardModule: Module<EstadoDashboard, State> = {
         const serverStats:IServerStats = {
           cpu: data.cpu,
           mem: data.mem,
-          network: data.network,
+          networks: data.networks,
           system: data.system,
           timestamp: data.timestamp,
         };

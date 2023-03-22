@@ -4,6 +4,7 @@ import { State } from '@/interfaces/store';
 import { INotificacao } from '@/interfaces/INotificaçao';
 import loginModule from './modules/login';
 import dashboardModule from './modules/dashboard';
+import usersModule from './modules/users';
 import { NOTIFICAR } from './actions-types';
 import { notificacoes } from './states';
 
@@ -27,6 +28,7 @@ export const store = createStore<State>({
   modules: {
     loginModule,
     dashboardModule,
+    usersModule,
   },
 });
 
