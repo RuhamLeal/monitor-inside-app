@@ -11,7 +11,7 @@
 	
 	npm run seed
 
-3.Abrir http://localhost:8080/#/login
+3.Abrir http://localhost:8081#/login
 
 Usuarios para fazer login
 
