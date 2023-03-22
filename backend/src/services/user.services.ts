@@ -109,6 +109,6 @@ export default class UserService {
       admin: user.admin
     }
 
-    return { token: JWT.generateToken(data)};
+    return { token: JWT.generateToken(data), admin: data.admin, username: user.name};
   }
 }
