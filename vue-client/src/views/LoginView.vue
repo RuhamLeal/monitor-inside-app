@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <section>
     <LoginForm />
     <Notificaçao />
-  </div>
+  </section>
 </template>
 
 <script lang="ts">

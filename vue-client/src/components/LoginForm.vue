@@ -57,7 +57,7 @@ export default defineComponent({
     const login = async () => {
       const loginFields = { email: inputEmail.value, password: inputPassword.value };
 
-      const { err } = await loginValidation(loginFields);
+      const { err } = loginValidation(loginFields);
 
       if (err) {
         inputErr.value.msg = err;
@@ -76,7 +76,7 @@ export default defineComponent({
 
       localStorage.setItem('token', res.token);
 
-      return router.push('/');
+      return router.push('/starti/dashboard');
     };
 
     return {
