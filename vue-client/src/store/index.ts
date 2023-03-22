@@ -3,13 +3,15 @@ import { InjectionKey } from 'vue';
 import { State } from '@/interfaces/store';
 import { INotificacao } from '@/interfaces/INotificaçao';
 import loginModule from './modules/login';
+import dashboardModule from './modules/dashboard';
 import { NOTIFICAR } from './actions-types';
+import { notificacoes } from './states';
 
 export const key: InjectionKey<Store<State>> = Symbol('store key');
 
 export const store = createStore<State>({
   state: {
-    notificacoes: [],
+    notificacoes,
   },
   mutations: {
     [NOTIFICAR](state, novaNotificacao: INotificacao) {
@@ -24,6 +26,7 @@ export const store = createStore<State>({
   },
   modules: {
     loginModule,
+    dashboardModule,
   },
 });
 
