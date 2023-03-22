@@ -2,6 +2,7 @@ import { fork } from "node:child_process";
 import { createLoggerSeq } from "./utils/createLoggerSeq";
 import emitLog from "./utils/emitLog";
 import { Server } from 'socket.io';
+import { IServerStats } from "../Interfaces/IServerStats";
 
 export default async function serverMonitoring(socket: Server) {
   const logger = createLoggerSeq();
@@ -21,7 +22,16 @@ export default async function serverMonitoring(socket: Server) {
       createChild(socket);
     });
 
-    child.on("message", (data) => {
+    child.on("message", (data: IServerStats) => {
+      data.timestamp = new Intl.DateTimeFormat(
+        'pt-br', 
+        { 
+          dateStyle: 'short', 
+          timeStyle: 'medium',
+          timeZone: 'America/Sao_Paulo',
+        }
+      ).format(new Date(data.timestamp) as Date);
+
       socket.sockets.emit('server-stats', data);
     });
 

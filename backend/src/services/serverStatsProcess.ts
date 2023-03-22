@@ -46,7 +46,7 @@ export function serverStatsProcess(logger: any) {
         },
         system: {
           name: os.type(),
-          uptime: os.uptime(),
+          uptime: Math.floor((os.uptime()) / 60),
         },
         networks: new Array(),
       };
