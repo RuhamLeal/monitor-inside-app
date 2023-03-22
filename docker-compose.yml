@@ -32,6 +32,29 @@ services:
     networks:
       - starti_network
 
+  vue_client:
+    build: ./vue-client
+    container_name: vue_client
+    tty: true
+    stdin_open: true
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.4' 
+          memory: 1048M
+        reservations:
+          cpus: '0.25' 
+          memory: 512M
+    depends_on:
+      - mongo
+      - mysql
+      - node-server
+    ports:
+      - 8081:8081
+    networks:
+      - starti_network
+
   mysql:
     container_name: mysql_db
     image: mysql:8.0.23

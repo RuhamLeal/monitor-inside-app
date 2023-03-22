@@ -23,8 +23,8 @@ export default class LoginView extends Vue {}
   body, html, div#app, section#main-login-page {
   background-color: #11181f;
   font-family: Arial, Helvetica, sans-serif;
-  width: 100%;
-    height: 100%;
-    margin: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
 }
 </style>
