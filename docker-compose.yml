@@ -25,7 +25,8 @@ services:
       - DB_HOST=mysql
       - DB_PORT=3306
     depends_on:
-      - db
+      - mongo
+      - mysql
     ports:
       - 3001:3001
     networks:
