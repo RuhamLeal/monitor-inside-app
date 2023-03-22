@@ -10,7 +10,7 @@
             Dashboard
           </router-link>
         </li>
-        <li>
+        <li v-if="admin">
           <router-link to="/starti/users" class="link">
             Usuarios
           </router-link>
@@ -28,7 +28,13 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'sidebar-component',
+  setup() {
+    const admin = JSON.parse(localStorage.getItem('user') as string);
 
+    return {
+      admin,
+    };
+  },
 });
 </script>
 

@@ -74,7 +74,13 @@ export default defineComponent({
         return notificar(TipoNotificacao.FALHA, 'Erro ao logar', res.message);
       }
 
+      const userStorage = {
+        username: res.username,
+        admin: res.admin,
+      };
+
       localStorage.setItem('token', res.token);
+      localStorage.setItem('user', JSON.stringify(userStorage));
 
       return router.push('/starti/dashboard');
     };
