@@ -1,4 +1,9 @@
 
+Rodar para criar os containers
+
+	docker-compose up -d --build
+
+
 Usuarios para fazer login
 
 	"password": "user",
