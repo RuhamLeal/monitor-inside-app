@@ -7,6 +7,23 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/LoginView.vue'),
   },
   {
+    path: '/starti',
+    name: 'starti',
+    component: () => import('../views/StartiView.vue'),
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('../components/Dashboard.vue'),
+      },
+      {
+        path: 'users',
+        name: 'Users',
+        component: () => import('../components/Users.vue'),
+      },
+    ],
+  },
+  {
     path: '/:catchAll(.*)',
     name: 'not found',
     component: {
