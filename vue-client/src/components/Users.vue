@@ -13,6 +13,7 @@
         />
       </div>
       <div id="users-form-container">
+        <button v-on:click="activeNewUserForm" >Novo usuario</button>
         <UserForm />
       </div>
     </section>
@@ -22,7 +23,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useStore } from '@/store';
-import { GETUSERS } from '@/store/actions-types';
+import { EDITING, GETUSERS, REGISTING } from '@/store/actions-types';
 import useNotificador from '@/hooks/notificador';
 import { TipoNotificacao } from '@/interfaces/INotificaçao';
 import UserBox from './UserBox.vue';
@@ -42,7 +43,7 @@ export default defineComponent({
       const res = await store.dispatch(GETUSERS);
 
       if (res?.message) {
-        return notificar(TipoNotificacao.FALHA, 'Erro ao logar', res.message);
+        return notificar(TipoNotificacao.FALHA, 'Erro ao mostrar Usuarios', res.message);
       }
       return null;
     };
@@ -51,8 +52,14 @@ export default defineComponent({
 
     const users = computed(() => store.getters.users);
 
+    const activeNewUserForm = () => {
+      store.commit(EDITING, false);
+      store.commit(REGISTING, true);
+    };
+
     return {
       users,
+      activeNewUserForm,
     };
   },
 });
