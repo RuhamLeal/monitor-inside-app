@@ -25,7 +25,7 @@ import Notificacao from '@/components/Notificação.vue';
 export default class LoginView extends Vue {}
 </script>
 
-<style >
+<style>
   #starti-container {
     display: flex;
   }
@@ -44,7 +44,7 @@ export default class LoginView extends Vue {}
     background-color: rgb(233, 233, 233);
   }
 
-  body, html, div#app, div#starti-container {
+  div#starti-container {
     width: 100%;
     height: 100%;
     margin: 0;
