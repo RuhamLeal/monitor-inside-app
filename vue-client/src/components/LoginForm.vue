@@ -1,34 +1,39 @@
 <template>
   <main>
-    <form @submit.prevent="login">
-      <div class="fields">
-        <img id="logo-image-sidebar" alt="logo" src="../assets/logo.png">
-      </div>
-      <div class="fields">
-        <label for="login-input-email" class="label">
-          Usuario
-          <input
-            type="text"
-            class="login-input"
-            v-model="inputEmail"
-            id="login-input-email"
-          />
-        </label>
-        <label for="login-input-password" class="label">
-          Senha
-          <input
-            type="password"
-            class="login-input"
-            v-model="inputPassword"
-            id="login-input-password"
-          />
-        </label>
-        <span id="span-message" v-show="err">{{ errMsg }}</span>
-      </div>
-      <div class="fields">
-        <button class="button" type="submit">Login</button>
-      </div>
-    </form>
+    <div id="login-container">
+      <img id="login-image" alt="login-image" src="../assets/login-image.png" />
+      <form @submit.prevent="login">
+        <div class="fields">
+          <img id="logo-image-sidebar" alt="logo" src="../assets/Monitoring_Inside-LOGO.png">
+        </div>
+        <div class="fields">
+          <label for="login-input-email" class="label">
+            Email:
+            <input
+              type="text"
+              class="login-input"
+              v-model="inputEmail"
+              id="login-input-email"
+              placeholder=" Insira seu email..."
+            />
+          </label>
+          <label for="login-input-password" class="label">
+            Senha
+            <input
+              type="password"
+              class="login-input"
+              v-model="inputPassword"
+              id="login-input-password"
+              placeholder=" Insira sua senha..."
+            />
+          </label>
+          <span id="span-message" v-show="err">{{ errMsg }}</span>
+        </div>
+        <div class="fields">
+          <button class="button" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
   </main>
 </template>
 
@@ -85,7 +90,7 @@ export default defineComponent({
       localStorage.setItem('token', res.token);
       localStorage.setItem('user', JSON.stringify(userStorage));
 
-      return router.push('/starti/dashboard');
+      return router.push('/inside/dashboard');
     };
 
     return {
@@ -106,9 +111,22 @@ export default defineComponent({
   color: #ca4b4b;
 }
 
+#login-image {
+  width: 35vw;
+}
+
+#login-container {
+  border-radius: 20px;
+  display: flex;
+  width: 60vw;
+  height: 55vh;
+  background: #33404e;
+}
+
 #logo-image-sidebar {
   margin: 0 auto;
-  max-width: 7vw;
+  max-width: 15vw;
+  height: 15vh;
 }
 
 main {
@@ -116,17 +134,14 @@ main {
  display: flex;
  justify-content: center;
  margin: 0 auto;
-
  width: 75%;
  min-height: 90vh;
 }
 
 form {
- border-radius: 1%;
  margin: 0;
- width: 30vw;
+ width: 20vw;
  height: 50vh;
- background: #33404e;
  display: flex;
  align-content: center;
  align-items: center;
@@ -144,7 +159,7 @@ form {
 
 .label {
   gap: 5px;
-  width: 60%;
+  width: 80%;
  align-items: left;
  color: #ffffff;
  display: flex;
@@ -161,10 +176,10 @@ form {
 }
 
 .button {
- width: 60%;
+ width: 80%;
  font-size: 20px;
  height: 35px;
- background-color: #55915b;
+ background-color: #60a567;
  color: #dfe9e0;
  border: 1px solid transparent;
  border-radius: 30px;

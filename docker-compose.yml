@@ -30,7 +30,7 @@ services:
     ports:
       - 3001:3001
     networks:
-      - starti_network
+      - monitoring-inside-network
 
   vue_client:
     build: ./vue-client
@@ -49,11 +49,11 @@ services:
     depends_on:
       - mongo
       - mysql
-      - node-server
+      - node_server
     ports:
-      - 8081:8081
+      - 8081:80
     networks:
-      - starti_network
+      - monitoring-inside-network
 
   mysql:
     container_name: mysql_db
@@ -74,7 +74,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
     networks:
-      - starti_network
+      - monitoring-inside-network
 
   mongo:
     container_name: mongo_db
@@ -96,12 +96,34 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
     networks:
-      - starti_network
+      - monitoring-inside-network
+
+  seq:
+    image: datalust/seq:2023.1
+    container_name: Seq
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'  
+          memory: 512M
+        reservations:
+          cpus: '0.15'  
+          memory: 128M
+    environment:
+      - ACCEPT_EULA=Y
+    restart: always
+    volumes:
+      - seq:/data
+    ports:
+      - 5341:80
+    networks:
+      - monitoring-inside-network
 
 volumes:
   mysql:
   mongo:
+  seq:
 
 networks:
-  starti_network:
+  monitoring-inside-network:
     driver: bridge

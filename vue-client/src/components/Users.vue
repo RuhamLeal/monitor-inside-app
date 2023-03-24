@@ -13,6 +13,12 @@
         />
       </div>
       <div id="users-form-container">
+        <div id="new-user-button-container">
+          <button id="new-user-button" v-on:click="activeNewUserForm" >
+            <font-awesome-icon icon="fa-solid fa-circle-plus" />
+            Criar Novo usuario
+          </button>
+        </div>
         <UserForm />
       </div>
     </section>
@@ -22,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useStore } from '@/store';
-import { GETUSERS } from '@/store/actions-types';
+import { EDITING, GETUSERS, REGISTING } from '@/store/actions-types';
 import useNotificador from '@/hooks/notificador';
 import { TipoNotificacao } from '@/interfaces/INotificaçao';
 import UserBox from './UserBox.vue';
@@ -42,7 +48,7 @@ export default defineComponent({
       const res = await store.dispatch(GETUSERS);
 
       if (res?.message) {
-        return notificar(TipoNotificacao.FALHA, 'Erro ao logar', res.message);
+        return notificar(TipoNotificacao.FALHA, 'Erro ao mostrar Usuarios', res.message);
       }
       return null;
     };
@@ -51,14 +57,33 @@ export default defineComponent({
 
     const users = computed(() => store.getters.users);
 
+    const activeNewUserForm = () => {
+      store.commit(EDITING, false);
+      store.commit(REGISTING, true);
+    };
+
     return {
       users,
+      activeNewUserForm,
     };
   },
 });
 </script>
 
-<style>
+<style scoped>
+  #new-user-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5%;
+    margin-right: 25%;
+  }
+  #new-user-button {
+    background-color: rgb(233, 233, 233);
+    border: 0px;
+    cursor: pointer;
+    font-size: x-large;
+  }
   #users-form-container {
     display: flex;
     flex-direction: column;
@@ -71,20 +96,22 @@ export default defineComponent({
     flex-direction: row;
     height: 100%;
   }
+  #users-container, ::-webkit-scrollbar{
+    width: 0;
+  }
   #users-container {
+    overflow-y:scroll;
     flex-direction: column;
     display: flex;
+    padding: 5%;
     width: 60%;
-    height: 100%;
-  }
-  .user-box:nth-child(1) {
-    margin: 5% 0 0 6%;
+    max-height: 100%;
   }
   .user-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 2% 0 0 6%;
+    margin-bottom: 3%;
     padding: 1% 0 1% 5%;
   }
   .user-box h3 {

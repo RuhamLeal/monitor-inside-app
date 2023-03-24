@@ -1,24 +1,27 @@
 <template>
   <header>
     <section id="image-sidebar-container">
-      <img id="logo-image-sidebar" alt="logo" src="../assets/logo.png">
+      <img id="logo-image-sidebar" alt="logo" src="../assets/Monitoring_Inside-LOGO.png">
     </section>
     <nav class="panel mt-5">
       <ul>
         <li>
-          <router-link to="/starti/dashboard" class="link">
+          <router-link to="/inside/dashboard" class="link">
             Dashboard
           </router-link>
         </li>
         <li v-if="admin">
-          <router-link to="/starti/users" class="link">
+          <router-link to="/inside/users" class="link">
             Usuarios
           </router-link>
         </li>
       </ul>
     </nav>
     <div class="has-text-centered">
-      <button v-on:click="logout" class="button">Log out</button>
+      <button v-on:click="logout" class="button">
+        <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
+        Log out
+      </button>
     </div>
   </header>
 </template>
@@ -26,16 +29,22 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
+import { useStore } from '@/store';
+import { CLEANUSERSTATE } from '@/store/actions-types';
+import { cleanUserState } from '@/store/states';
 
 export default defineComponent({
   name: 'sidebar-component',
   setup() {
+    const store = useStore();
     const { admin } = JSON.parse(localStorage.getItem('user') as string);
 
     const router = useRouter();
 
     const logout = () => {
       localStorage.clear();
+
+      store.commit(CLEANUSERSTATE, cleanUserState);
 
       return router.push('/login');
     };

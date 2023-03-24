@@ -28,3 +28,10 @@ export const userToEdit = {
   email: '',
   admin: false,
 };
+
+export const cleanUserState = {
+  editing,
+  registing,
+  users,
+  userToEdit,
+};

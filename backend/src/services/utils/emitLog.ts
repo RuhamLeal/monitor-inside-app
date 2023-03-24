@@ -22,7 +22,7 @@ export default function emitLog(logger: Logger, instance: any, message: string, 
     console.log(new Date());
     console.log(message);
     console.error(instance);
-    console.log('Erro no loggerseq: ', err);
+    console.log('Logger Seq offline');
     console.log('#########################');
   }
 }

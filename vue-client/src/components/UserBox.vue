@@ -7,21 +7,33 @@
       <h4 v-else >Tipo: Usuario</h4>
     </div>
     <div id="buttons-container" >
-      <button v-on:click="edicao">Editar</button>
-      <button v-on:click="excluir">Excluir</button>
+      <button v-on:click="edicao">
+        <font-awesome-icon icon="fa-solid fa-pen-to-square"/>
+        Editar
+      </button>
+      <button v-on:click="excluir">
+        <font-awesome-icon icon="fa-solid fa-trash" />
+        Excluir
+      </button>
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent } from 'vue';
 import { useStore } from '@/store';
-import { EDITING, REGISTING, EDITUSER } from '@/store/actions-types';
+import {
+  EDITING, REGISTING, EDITUSER, DELETEUSER,
+} from '@/store/actions-types';
+import { userToEdit } from '@/store/states';
+import useNotificador from '@/hooks/notificador';
+import { TipoNotificacao } from '@/interfaces/INotificaçao';
 
 export default defineComponent({
   name: 'userbox-component',
   setup(props) {
     const store = useStore();
+    const { notificar } = useNotificador();
 
     const edicao = () => {
       store.commit(REGISTING, false);
@@ -37,8 +49,25 @@ export default defineComponent({
       store.commit(EDITING, true);
     };
 
+    const excluir = async () => {
+      store.commit(REGISTING, false);
+      store.commit(EDITING, false);
+      store.commit(EDITUSER, userToEdit);
+
+      const res = await store.dispatch(DELETEUSER, {
+        id: props.id,
+      });
+
+      if (res?.message) {
+        return notificar(TipoNotificacao.FALHA, 'Erro ao excluir usuario', res.message);
+      }
+
+      return notificar(TipoNotificacao.SUCESSO, 'Usuario excluido', props.name);
+    };
+
     return {
       edicao,
+      excluir,
     };
   },
   props: {
@@ -48,7 +77,7 @@ export default defineComponent({
     },
     name: {
       type: String,
-      required: false,
+      required: true,
     },
     email: {
       type: String,
