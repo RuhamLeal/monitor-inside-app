@@ -1,4 +1,6 @@
 
+1.Na pasta backend criar arquivo .env da raiz com o conteudo que tem dentro do env.example
+
 2.Rodar para criar os containers
 
 	docker-compose up -d --build
