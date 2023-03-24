@@ -1,7 +1,7 @@
 <template>
   <header>
     <section id="image-sidebar-container">
-      <img id="logo-image-sidebar" alt="logo" src="../assets/logo.png">
+      <img id="logo-image-sidebar" alt="logo" src="../assets/Monitoring_Inside-LOGO.png">
     </section>
     <nav class="panel mt-5">
       <ul>

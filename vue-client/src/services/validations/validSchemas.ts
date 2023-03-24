@@ -13,10 +13,8 @@ export const loginSchema = Joi.object({
     .required(),
 
   password: Joi.string()
-    .min(4)
     .required()
     .messages({
-      'string.min': 'Insira uma senha com mais de 3 dígitos',
       'string.empty': requiredText,
       'any.required': requiredText,
     }),

@@ -55,22 +55,34 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  border-radius: 30px;
+  border-radius: 20px;
 }
 
 .notificacoes article .title{
+  color: rgb(207, 201, 201);
   position: relative;
-  right: 70px;
-  bottom: 20px;
+  font-weight: 600;
+  text-decoration: underline;
+  font-style: oblique;
+  font-size: large;
+  bottom: 18px;
+}
+
+.notificacoes article .message{
+  color: rgb(207, 201, 201);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial;
+  position: relative;
+  top: 5px;
 }
 
 .notificacoes .danger {
-  background-color: rgb(187, 37, 37);
+  background-color: rgb(136, 40, 40);
 }
 .notificacoes .warning {
-  background-color: rgb(146, 26, 26);
+  background-color: rgb(46, 24, 24);
 }
 .notificacoes .success {
-  background-color: rgb(134, 211, 138);
+  background-color: rgb(136, 40, 40);
+  background-color: rgb(64, 100, 66);
 }
 </style>
