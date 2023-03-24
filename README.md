@@ -1,5 +1,10 @@
 
-1.Na pasta backend criar arquivo .env da raiz com o conteudo que tem dentro do env.example
+0. 
+	git clone https://github.com/RuhamLeal/test-fullstack-2023.git
+	
+	cd test-fullstack-2023
+
+1.Na pasta ./backend criar arquivo .env da raiz com o conteudo que tem dentro do env.example
 
 2.Rodar para criar os containers
 
