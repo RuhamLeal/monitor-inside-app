@@ -22,6 +22,12 @@ const load = async () => {
           name: 'user002',
           password: '$2a$10$7P5Ph.olO0JS9R9dWYnl1eTFwzVaB1beDdlAbAZWloZgAWDt2rvuq',
           admin: false,
+        },
+        {
+          email: 'user003@user.com',
+          name: 'user003',
+          password: '$2a$10$7P5Ph.olO0JS9R9dWYnl1eTFwzVaB1beDdlAbAZWloZgAWDt2rvuq',
+          admin: false,
         }
       ]
     })
