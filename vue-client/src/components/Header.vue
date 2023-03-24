@@ -1,21 +1,23 @@
-h<template>
+<template>
   <header>
-    <h1>STARTI</h1>
-    <h2>{{ timestamp }}</h2>
+    <h1>Monitoring Inside</h1>
+    <h2>Olá, {{ username }}</h2>
   </header>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
-import { useStore } from '@/store';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'header-component',
   setup() {
-    const store = useStore();
+    let user = localStorage.getItem('user');
+    if (user) {
+      user = JSON.parse(user).username;
+    }
 
     return {
-      timestamp: computed(() => store.getters.serverStats.timestamp),
+      username: user || '',
     };
   },
 
@@ -25,6 +27,7 @@ export default defineComponent({
 <style scoped>
   header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     background: #233546;
     color: wheat;
@@ -38,8 +41,6 @@ export default defineComponent({
   }
 
   header h2 {
-    position: relative;
-    font-size: 18px;
-    left: 80%;
+    margin-right: 2%;
   }
 </style>
