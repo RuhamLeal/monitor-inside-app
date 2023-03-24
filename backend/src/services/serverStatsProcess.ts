@@ -1,9 +1,8 @@
-import os from 'os';
 import terminate from "terminate";
 import emitLog from "./utils/emitLog";
 import mongooseConnection from "../models/mongooseClientConnection";
 import { server_stats_model } from '../models/serverStats.model';
-import si from 'systeminformation';
+import getServerStats from "./utils/serverStats";
 
 process.on("message", (data) => serverStatsProcess(data));
 
@@ -29,44 +28,25 @@ export function serverStatsProcess(logger: any) {
 
   mongodb.once("open", () => emitLog(logger, null, 'Conectado no mongo - Stats Process'));
 
+  emitLog(logger, null, 'Iniciando Monitoramento');
+
   setInterval(async () => {
     try {
-      const mem = await si.mem();
-      const serverStats = {
-        timestamp: new Date(),
-        cpu: { 
-          model: os.cpus()[0].model,
-          qty: os.cpus().length,
-        },
-        mem: {
-          total: Math.floor(mem.total / (1024 ** 2)),
-          free: Math.floor(mem.free / (1024 ** 2)),
-          used: Math.floor(mem.used / (1024 ** 2)),
-          cache: Math.floor(mem.buffcache / (1024 ** 2))
-        },
-        system: {
-          name: os.type(),
-          uptime: Math.floor((os.uptime()) / 60),
-        },
-        networks: new Array(),
-      };
-  
-      Object.values(os.networkInterfaces())
-        .forEach((network) => network?.forEach((netInterface) => {
-          const interfaceFormated = {
-            address: {
-              ip: netInterface.address,
-              family: netInterface.family,
-            }
-          };
-  
-          serverStats.networks.push(interfaceFormated);
-        }));
+      const serverStats = await getServerStats();
   
       if (typeof process.send === 'function') { 
         process.send(serverStats);
       }
+  
+    } catch(err) {
+      emitLog(logger, err, 'Erro no algoritmo de monitoramento principal do process');
+    }
+  }, 1000);
 
+  setInterval(async () => {
+    try {
+      const serverStats = await getServerStats();
+  
       const stats = await server_stats_model.find();
   
       if (stats.length === 0) {
@@ -76,7 +56,7 @@ export function serverStatsProcess(logger: any) {
       }
   
     } catch(err) {
-      emitLog(logger, err, 'Erro no algoritmo principal do process');
+      emitLog(logger, err, 'Erro no algoritmo de escrita no mongo');
     }
-  }, 4000);
+  }, 5000);
 }
