@@ -79,19 +79,18 @@ export default defineComponent({
     height: 100%;
   }
   #users-container {
+    overflow-y:scroll;
     flex-direction: column;
     display: flex;
+    padding: 5%;
     width: 60%;
-    height: 100%;
-  }
-  .user-box:nth-child(1) {
-    margin: 5% 0 0 6%;
+    max-height: 100%;
   }
   .user-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 2% 0 0 6%;
+    margin-bottom: 3%;
     padding: 1% 0 1% 5%;
   }
   .user-box h3 {

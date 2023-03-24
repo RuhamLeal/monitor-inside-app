@@ -9,3 +9,4 @@ export const EDITING = 'EDITING';
 export const REGISTING = 'REGISTING';
 export const EDITUSER = 'EDITUSER';
 export const PUTUSER = 'PUTUSER';
+export const POSTUSER = 'POSTUSER';
