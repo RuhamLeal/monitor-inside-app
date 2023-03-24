@@ -85,7 +85,7 @@ export default defineComponent({
       localStorage.setItem('token', res.token);
       localStorage.setItem('user', JSON.stringify(userStorage));
 
-      return router.push('/starti/dashboard');
+      return router.push('/inside/dashboard');
     };
 
     return {

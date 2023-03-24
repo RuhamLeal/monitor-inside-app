@@ -6,12 +6,12 @@
     <nav class="panel mt-5">
       <ul>
         <li>
-          <router-link to="/starti/dashboard" class="link">
+          <router-link to="/inside/dashboard" class="link">
             Dashboard
           </router-link>
         </li>
         <li v-if="admin">
-          <router-link to="/starti/users" class="link">
+          <router-link to="/inside/users" class="link">
             Usuarios
           </router-link>
         </li>
