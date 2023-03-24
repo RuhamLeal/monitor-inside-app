@@ -26,16 +26,22 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
+import { useStore } from '@/store';
+import { CLEANUSERSTATE } from '@/store/actions-types';
+import { cleanUserState } from '@/store/states';
 
 export default defineComponent({
   name: 'sidebar-component',
   setup() {
+    const store = useStore();
     const { admin } = JSON.parse(localStorage.getItem('user') as string);
 
     const router = useRouter();
 
     const logout = () => {
       localStorage.clear();
+
+      store.commit(CLEANUSERSTATE, cleanUserState);
 
       return router.push('/login');
     };

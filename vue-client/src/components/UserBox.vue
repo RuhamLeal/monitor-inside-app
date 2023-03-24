@@ -20,11 +20,14 @@ import {
   EDITING, REGISTING, EDITUSER, DELETEUSER,
 } from '@/store/actions-types';
 import { userToEdit } from '@/store/states';
+import useNotificador from '@/hooks/notificador';
+import { TipoNotificacao } from '@/interfaces/INotificaçao';
 
 export default defineComponent({
   name: 'userbox-component',
   setup(props) {
     const store = useStore();
+    const { notificar } = useNotificador();
 
     const edicao = () => {
       store.commit(REGISTING, false);
@@ -40,14 +43,20 @@ export default defineComponent({
       store.commit(EDITING, true);
     };
 
-    const excluir = () => {
+    const excluir = async () => {
       store.commit(REGISTING, false);
       store.commit(EDITING, false);
       store.commit(EDITUSER, userToEdit);
 
-      store.dispatch(DELETEUSER, {
+      const res = await store.dispatch(DELETEUSER, {
         id: props.id,
       });
+
+      if (res?.message) {
+        return notificar(TipoNotificacao.FALHA, 'Erro ao excluir usuario', res.message);
+      }
+
+      return notificar(TipoNotificacao.SUCESSO, 'Usuario excluido', props.name);
     };
 
     return {
@@ -62,7 +71,7 @@ export default defineComponent({
     },
     name: {
       type: String,
-      required: false,
+      required: true,
     },
     email: {
       type: String,

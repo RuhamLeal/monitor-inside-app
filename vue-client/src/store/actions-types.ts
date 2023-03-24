@@ -11,3 +11,4 @@ export const EDITUSER = 'EDITUSER';
 export const PUTUSER = 'PUTUSER';
 export const POSTUSER = 'POSTUSER';
 export const DELETEUSER = 'DELETEUSER';
+export const CLEANUSERSTATE = 'CLEANUSERSTATE';

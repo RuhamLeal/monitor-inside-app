@@ -2,7 +2,7 @@ import { Module } from 'vuex';
 import httpClient from '@/services/http';
 import { State } from '@/interfaces/store';
 import {
-  EDITING, EDITUSER, GETUSERS, REGISTING, SHOWUSERS, PUTUSER, POSTUSER, DELETEUSER,
+  EDITING, EDITUSER, GETUSERS, REGISTING, SHOWUSERS, PUTUSER, POSTUSER, DELETEUSER, CLEANUSERSTATE,
 } from '@/store/actions-types';
 import {
   users, editing, registing, userToEdit,
@@ -35,6 +35,9 @@ const usersModule: Module<EstadoUsers, State> = {
     },
     [EDITUSER](context, data) {
       context.userToEdit = data;
+    },
+    [CLEANUSERSTATE](context, data) {
+      Object.assign(context, data);
     },
   },
   actions: {
