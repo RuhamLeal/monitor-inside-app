@@ -18,7 +18,10 @@
       </ul>
     </nav>
     <div class="has-text-centered">
-      <button v-on:click="logout" class="button">Log out</button>
+      <button v-on:click="logout" class="button">
+        <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
+        Log out
+      </button>
     </div>
   </header>
 </template>

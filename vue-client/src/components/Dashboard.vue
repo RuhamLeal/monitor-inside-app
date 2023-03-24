@@ -2,29 +2,29 @@
   <main>
     <section id="stat-main-page">
       <article class="stat-container">
-        <h1>CPU</h1>
+        <h1 class="golden-text-color">CPU</h1>
         <h2>Modelo</h2>
-        <h2>{{ serverStats.cpu.model }}</h2>
+        <h2 id="cpu-model-text">{{ serverStats.cpu.model }}</h2>
         <h2>Quantidade de CPUs: {{ serverStats.cpu.qty }}</h2>
       </article>
       <article class="stat-container">
-        <h1>MEMÓRIA</h1>
+        <h1 class="golden-text-color">MEMÓRIA</h1>
         <h2>Total: {{ serverStats.mem.total }} Mbs</h2>
         <h2>Usada: {{ serverStats.mem.used }} Mbs</h2>
         <h2>Livre: {{ serverStats.mem.free }} Mbs</h2>
         <h2>Cache: {{ serverStats.mem.cache }} Mbs</h2>
       </article>
       <article class="stat-container">
-        <h1>SISTEMA</h1>
+        <h1 class="golden-text-color">SISTEMA</h1>
         <h2>{{ serverStats.system.name }}</h2>
         <h2>Iniciado a {{ serverStats.system.uptime }} minutos</h2>
       </article>
       <article class="stat-container">
-        <h1>DATE</h1>
+        <h1 class="golden-text-color">DATE</h1>
         <h2>{{ serverStats.timestamp }}</h2>
       </article>
       <article class="stat-container">
-        <h1>NETWORKS</h1>
+        <h1 class="golden-text-color">NETWORKS</h1>
         <div v-for="network, idx in serverStats.networks" :key="idx">
           <span>
             Endereço {{ idx + 1 }}: {{ network.address.ip }}  ---  {{ network.address.family }}
@@ -58,6 +58,12 @@ export default defineComponent({
 </script>
 
 <style>
+#cpu-model-text {
+  color: rgb(10, 23, 214);
+}
+.golden-text-color {
+  color: rgba(206, 175, 0, 0.87);
+}
 #stat-main-page {
   display: flex;
   flex-direction: row;

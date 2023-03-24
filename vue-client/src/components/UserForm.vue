@@ -1,5 +1,10 @@
 <template>
   <form v-if="registing" @submit.prevent="criarUsuario" class="user-form">
+    <div class="back-button-container">
+      <button v-on:click="voltar" class="back-button" type="button" >
+        <font-awesome-icon icon="fa-solid fa-left-long" size="xl" style="color: #ffffff;" />
+      </button>
+    </div>
     <label class="user-form-input" for="username">
       Nome
       <input v-model="createUserInputs.username.value" id="username" type="text">
@@ -21,6 +26,11 @@
     </div>
   </form>
   <form v-if="editing" @submit.prevent="editarUsuario" class="user-form">
+    <div class="back-button-container" >
+      <button v-on:click="voltar" class="back-button" type="button" >
+        <font-awesome-icon icon="fa-solid fa-left-long" size="xl" style="color: #ffffff;" />
+      </button>
+    </div>
     <label class="user-form-input" for="username">
       Nome
       <input v-model="updateUserInputs.username.value" id="username" type="text">
@@ -52,6 +62,7 @@ import {
 import useNotificador from '@/hooks/notificador';
 import { TipoNotificacao } from '@/interfaces/INotificaçao';
 import { userToEdit } from '@/store/states';
+import userFormValidation from '@/services/validations/UserFormValidation';
 
 export default defineComponent({
   name: 'userform-component',
@@ -79,12 +90,20 @@ export default defineComponent({
     };
 
     const criarUsuario = async () => {
-      const res = await store.dispatch(POSTUSER, {
+      const userData = {
         username: createUserInputs.username.value,
         email: createUserInputs.email.value,
         admin: createUserInputs.admin.value,
         password: createUserInputs.password.value,
-      });
+      };
+
+      const { err } = userFormValidation(userData);
+
+      if (err) {
+        return notificar(TipoNotificacao.FALHA, 'Erro no Form', err);
+      }
+
+      const res = await store.dispatch(POSTUSER, { ...userData });
 
       if (res?.message) {
         return notificar(TipoNotificacao.FALHA, 'Erro ao criar usuario', res.message);
@@ -99,12 +118,22 @@ export default defineComponent({
     };
 
     const editarUsuario = async () => {
-      const res = await store.dispatch(PUTUSER, {
-        id: toUpdateId.value,
+      const userData = {
         username: updateUserInputs.value.username.value,
         email: updateUserInputs.value.email.value,
         admin: updateUserInputs.value.admin.value,
         password: updateUserInputs.value.password.value,
+      };
+
+      const { err } = userFormValidation(userData);
+
+      if (err) {
+        return notificar(TipoNotificacao.FALHA, 'Erro no Form', err);
+      }
+
+      const res = await store.dispatch(PUTUSER, {
+        id: toUpdateId.value,
+        ...userData,
       });
 
       if (res?.message) {
@@ -121,6 +150,12 @@ export default defineComponent({
       return null;
     };
 
+    const voltar = () => {
+      store.commit(EDITING, false);
+      store.commit(REGISTING, false);
+      store.commit(EDITUSER, userToEdit);
+    };
+
     return {
       editing: computed(() => store.getters.editing),
       registing: computed(() => store.getters.registing),
@@ -128,6 +163,7 @@ export default defineComponent({
       createUserInputs,
       editarUsuario,
       criarUsuario,
+      voltar,
     };
   },
 });
@@ -139,15 +175,46 @@ export default defineComponent({
   display: flex;
   margin-top: 20%;
   flex-direction: column;
-  gap: 15px;
+  gap: 30px;
 }
+.user-form-input input {
+  border: none;
+  border-bottom: 1px solid #142638;
+  background-color: rgb(233, 233, 233);
+  padding-left: 5px;
+  height: 30px;
+}
+
 .user-form-input {
+  font-size: large;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 10px;
 }
+
+.back-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.back-button {
+  border-radius: 5px;
+  border: none;
+  background-color: #142638;
+  cursor: pointer;
+}
+
 #user-form-submit{
   display: flex;
   justify-content: center;
+  width: 100%;
+}
+
+#user-form-submit button {
+  border: none;
+  color: wheat;
+  background-color: rgb(41, 85, 41);
+  height: 30px;
+  width: 100%;
 }
 </style>

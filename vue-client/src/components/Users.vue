@@ -13,7 +13,12 @@
         />
       </div>
       <div id="users-form-container">
-        <button v-on:click="activeNewUserForm" >Novo usuario</button>
+        <div id="new-user-button-container">
+          <button id="new-user-button" v-on:click="activeNewUserForm" >
+            <font-awesome-icon icon="fa-solid fa-circle-plus" />
+            Criar Novo usuario
+          </button>
+        </div>
         <UserForm />
       </div>
     </section>
@@ -66,6 +71,19 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  #new-user-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5%;
+    margin-right: 25%;
+  }
+  #new-user-button {
+    background-color: rgb(233, 233, 233);
+    border: 0px;
+    cursor: pointer;
+    font-size: x-large;
+  }
   #users-form-container {
     display: flex;
     flex-direction: column;

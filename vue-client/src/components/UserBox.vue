@@ -7,8 +7,14 @@
       <h4 v-else >Tipo: Usuario</h4>
     </div>
     <div id="buttons-container" >
-      <button v-on:click="edicao">Editar</button>
-      <button v-on:click="excluir">Excluir</button>
+      <button v-on:click="edicao">
+        <font-awesome-icon icon="fa-solid fa-pen-to-square"/>
+        Editar
+      </button>
+      <button v-on:click="excluir">
+        <font-awesome-icon icon="fa-solid fa-trash" />
+        Excluir
+      </button>
     </div>
   </section>
 </template>
