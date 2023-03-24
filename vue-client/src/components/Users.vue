@@ -65,7 +65,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
   #users-form-container {
     display: flex;
     flex-direction: column;
@@ -77,6 +77,9 @@ export default defineComponent({
     display: flex;
     flex-direction: row;
     height: 100%;
+  }
+  #users-container, ::-webkit-scrollbar{
+    width: 0;
   }
   #users-container {
     overflow-y:scroll;

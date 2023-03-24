@@ -2,7 +2,7 @@ import { Module } from 'vuex';
 import httpClient from '@/services/http';
 import { State } from '@/interfaces/store';
 import {
-  EDITING, EDITUSER, GETUSERS, REGISTING, SHOWUSERS, PUTUSER, POSTUSER,
+  EDITING, EDITUSER, GETUSERS, REGISTING, SHOWUSERS, PUTUSER, POSTUSER, DELETEUSER,
 } from '@/store/actions-types';
 import {
   users, editing, registing, userToEdit,
@@ -130,6 +130,34 @@ const usersModule: Module<EstadoUsers, State> = {
         });
 
         context.commit(SHOWUSERS, users);
+
+        return null;
+      } catch (err: any) {
+        if (!err.response) {
+          return { err, message: 'Unable to fetch' };
+        }
+
+        return { message: err.response?.data.message };
+      }
+    },
+    async [DELETEUSER](context, data) {
+      try {
+        const token = localStorage.getItem('token') as string;
+
+        await httpClient.delete(
+          `/user/${data.id}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          },
+        );
+
+        const { users } = context.state;
+
+        const filteredUsers = users.filter((user) => user.id !== data.id);
+
+        context.commit(SHOWUSERS, filteredUsers);
 
         return null;
       } catch (err: any) {

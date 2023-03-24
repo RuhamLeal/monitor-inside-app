@@ -14,9 +14,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent } from 'vue';
 import { useStore } from '@/store';
-import { EDITING, REGISTING, EDITUSER } from '@/store/actions-types';
+import {
+  EDITING, REGISTING, EDITUSER, DELETEUSER,
+} from '@/store/actions-types';
+import { userToEdit } from '@/store/states';
 
 export default defineComponent({
   name: 'userbox-component',
@@ -37,8 +40,19 @@ export default defineComponent({
       store.commit(EDITING, true);
     };
 
+    const excluir = () => {
+      store.commit(REGISTING, false);
+      store.commit(EDITING, false);
+      store.commit(EDITUSER, userToEdit);
+
+      store.dispatch(DELETEUSER, {
+        id: props.id,
+      });
+    };
+
     return {
       edicao,
+      excluir,
     };
   },
   props: {
