@@ -40,6 +40,6 @@ export default async function serverMonitoring(socket: Server) {
       child.kill();
     });
 
-    child.send(logger);
+    child.send(1);
   }
 }

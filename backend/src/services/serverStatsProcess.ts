@@ -3,11 +3,14 @@ import emitLog from "./utils/emitLog";
 import mongooseConnection from "../models/mongooseClientConnection";
 import { server_stats_model } from '../models/serverStats.model';
 import getServerStats from "./utils/serverStats";
+import { createLoggerSeq } from "./utils/createLoggerSeq";
 
-process.on("message", (data) => serverStatsProcess(data));
+process.on("message", (data: 1) => serverStatsProcess(data));
 
-export function serverStatsProcess(logger: any) {
+export function serverStatsProcess(_data: 1) {
   const exit = () => terminate(process.pid);
+
+  const logger = createLoggerSeq();
 
   process
     .on("uncaughtException", (error) => {
