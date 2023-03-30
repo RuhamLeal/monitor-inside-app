@@ -2,9 +2,9 @@ README IN PROGRESS
 
 0.
 
-	git clone https://github.com/RuhamLeal/test-fullstack-2023.git
+	git clone https://github.com/RuhamLeal/monitor-inside-app.git
 	
-	cd test-fullstack-2023
+	cd monitor-inside-app
 
 1.Na pasta ./backend criar arquivo .env da raiz com o conteudo que tem dentro do env.example
 
