@@ -23,7 +23,7 @@ The main focus of this application is nodejs' native library, child_process. In 
 
 The child thread (that monitors the server's state) is in charge of reading the server's state and send it in real time through a socket server, where every 1 second it sends the data to all connected clients, and every 5 seconds it saves the state in the mongodb.
 
-There is also Seq, an application for visualization of application errors, where we can see when the error occurs when monitoring, saving something in mongo or an error in the application that works in the url http://localhost:5341
+There is also Seq, an application for visualization of application errors, where we can see when the error occurs when monitoring, saving something in mongo or an error in the application.
 
 <details>
   <summary><strong>Details</strong></summary><br />
@@ -134,6 +134,7 @@ npm run seed
 ```
 
 7. Open your browser and paste the url http://localhost:8081#/login
+7.1 Open Seq Application in http://localhost:5341
 
 8. Log in with:
 
