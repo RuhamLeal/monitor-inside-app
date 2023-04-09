@@ -17,7 +17,13 @@
 
 ## About the Project
 
-Monitor Inside is a fullstack application that provides real-time information about your server and where you can manage your users
+Monitor Inside is a fullstack web application that provides real-time information about your server and where you can also manage users who can see or edit other users.
+
+The main focus of this application is nodejs' native library, child_process. In the application I opened a child process with the child_process fork method and created a new thread to monitor the server and the main thread was in charge of the user crud api.
+
+The child thread (that monitors the server's state) is in charge of reading the server's state and send it in real time through a socket server, where every 1 second it sends the data to all connected clients, and every 5 seconds it saves the state in the mongodb.
+
+There is also Seq, an application for visualization of application errors, where we can see when the error occurs when monitoring, saving something in mongo or an error in the application that works in the url http://localhost:5341
 
 <details>
   <summary><strong>Details</strong></summary><br />
