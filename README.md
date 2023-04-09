@@ -134,6 +134,7 @@ npm run seed
 ```
 
 7. Open your browser and paste the url http://localhost:8081#/login
+
 7.1 Open Seq Application in http://localhost:5341
 
 8. Log in with:
