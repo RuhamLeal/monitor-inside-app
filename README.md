@@ -6,7 +6,7 @@
   <summary>Summary</summary><br />
   <ol>
     <li><a href="#about-the-project">About the Project</a></li>
-    <li><a href="#technologies">Technologies</a></li>a
+    <li><a href="#technologies">Technologies</a></li>
     <li><a href="#features">Features</a></li>
     <li><a href="#how-to-xecute-the-project">How to Execute the Project</a></li>
     <li><a href="#skills">Skills</a></li>
